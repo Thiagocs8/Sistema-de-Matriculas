@@ -1,1 +1,5 @@
 # Sistema-de-Matriculas
+
+## Caso de Uso
+
+Implementado o diagrama de caso de uso (09/09) para sistema de matriculas
