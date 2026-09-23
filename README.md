@@ -2,6 +2,11 @@
 
 Este repositório contém os artefatos de análise para a informatização do sistema de matrículas de uma universidade.
 
+## Alunos
+Caio Kfuri
+João Heleno 
+Thiago Costa Soares
+
 ## Conteúdo
 
 - `diagrama_casos_uso.drawio` — Diagrama de Casos de Uso (UML), editável no [draw.io](https://app.diagrams.net/).
