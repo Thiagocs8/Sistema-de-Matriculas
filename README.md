@@ -3,9 +3,9 @@
 Este repositório contém os artefatos de análise para a informatização do sistema de matrículas de uma universidade.
 
 ## Alunos
-Caio Kfuri
-João Heleno 
-Thiago Costa Soares
+- Caio Kfuri
+- João Heleno 
+- Thiago Costa Soares
 
 ## Conteúdo
 
