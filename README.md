@@ -5,6 +5,24 @@ Este repositório contém os artefatos de análise para a informatização do si
 ## Conteúdo
 
 - `diagrama_casos_uso.drawio` — Diagrama de Casos de Uso (UML), editável no [draw.io](https://app.diagrams.net/).
+- `docs/diagrama_classes.drawio.pdf` — Diagrama de Classes (UML).
+- `src/main/java` — Projeto Java (Maven) com as classes, atributos e stub dos métodos modelados no diagrama de classes.
+
+## Projeto Estrutural (Diagrama de Classes)
+
+O projeto Java (Maven, `pom.xml`) implementa a estrutura definida no diagrama de classes, organizada nos pacotes:
+
+- `br.pucminas.matriculas.model` — `Usuario` (abstrata), `Aluno`, `Professor`, `Secretaria`, `Curso`, `Curriculo`, `Disciplina`, `PeriodoMatricula`, `Matricula`.
+- `br.pucminas.matriculas.model.enums` — `StatusDisciplina`, `TipoMatricula`, `StatusMatricula`, `StatusPeriodo`.
+- `br.pucminas.matriculas.external` — `SistemaCobranca` (interface para o sistema externo de cobrança).
+
+Nesta etapa (Lab01S02), as classes contêm os atributos e os stubs dos métodos modelados (lançando `UnsupportedOperationException` com `// TODO`), sem a lógica de negócio implementada. A implementação das funcionalidades será feita na etapa seguinte (Lab01S03).
+
+Para compilar o projeto com Maven:
+
+```bash
+mvn compile
+```
 
 ## Diagrama de Casos de Uso
 
