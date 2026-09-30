@@ -1,6 +1,7 @@
 package br.pucminas.matriculas.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.pucminas.matriculas.model.enums.StatusPeriodo;

@@ -25,12 +25,8 @@ public class Secretaria extends Usuario {
         }
     }
 
-    public Curriculo gerarCurriculo(String semestre) {
-        Curriculo curriculo = new Curriculo(semestre);
-        for (Disciplina d : disciplinas) {
-            curriculo.adicionarDisciplina(d);
-        }
-        return curriculo;
+    public Curriculo gerarCurriculo(String semestre, Curso curso) {
+        return new Curriculo(semestre, curso);
     }
 
     public void encerrarPeriodoMatricula(PeriodoMatricula p) {

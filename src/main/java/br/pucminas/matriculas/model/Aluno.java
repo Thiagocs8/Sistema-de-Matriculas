@@ -38,12 +38,11 @@ public class Aluno extends Usuario {
             return null;
         }
 
-        boolean sucesso = d.matricular(this);
+        Matricula novaMatricula = new Matricula(tipo, new Date(), this, d);
+        boolean sucesso = d.matricular(novaMatricula);
         if (!sucesso) {
             return null;
         }
-
-        Matricula novaMatricula = new Matricula(tipo, new Date(), this, d);
         this.matriculas.add(novaMatricula);
         return novaMatricula;
     }

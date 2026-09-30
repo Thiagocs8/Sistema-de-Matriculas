@@ -21,8 +21,8 @@ public class Disciplina {
         this.status = StatusDisciplina.EM_ABERTO;
     }
 
-    public boolean matricular(Aluno a) {
-        if (a == null || status != StatusDisciplina.EM_ABERTO) {
+    public boolean matricular(Matricula m) {
+        if (m == null || m.getAluno() == null || status != StatusDisciplina.EM_ABERTO) {
             return false;
         }
 
@@ -32,12 +32,11 @@ public class Disciplina {
         }
 
         boolean jaMatriculado = matriculas.stream()
-                .anyMatch(m -> m.getAluno().equals(a) && m.isAtiva());
+                .anyMatch(existing -> existing.getAluno().equals(m.getAluno()) && existing.isAtiva());
         if (jaMatriculado) {
             return false;
         }
 
-        Matricula m = new Matricula(a, this);
         return matriculas.add(m);
     }
 
@@ -92,7 +91,7 @@ public class Disciplina {
     }
 
     public void setCapacidadeMaxima(int capacidadeMaxima) {
-        this.capacidadeMaxima = capacityMaxima;
+        this.capacidadeMaxima = capacidadeMaxima;
     }
 
     public int getMinimoParaAtivar() {
