@@ -22,8 +22,11 @@ public class Matricula {
     }
 
     public void cancelar() {
-        // TODO: implementar cancelamento da matricula
-        throw new UnsupportedOperationException("Nao implementado");
+        this.status = StatusMatricula.CANCELADA;
+    }
+
+    public boolean isAtiva() {
+        return this.status == StatusMatricula.ATIVA;
     }
 
     public TipoMatricula getTipo() {

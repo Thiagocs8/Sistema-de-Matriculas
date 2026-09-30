@@ -11,8 +11,12 @@ public class Curriculo {
     }
 
     public void gerar() {
-        // TODO: implementar geracao do curriculo do semestre
-        throw new UnsupportedOperationException("Nao implementado");
+        if (curso != null) {
+            System.out.println("Currículo do curso " + curso.getNome() + " para o semestre " + semestre + ":");
+            for (Disciplina d : curso.getDisciplinas()) {
+                System.out.println("- " + d.getCodigo() + " : " + d.getNome());
+            }
+        }
     }
 
     public String getSemestre() {

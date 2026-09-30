@@ -12,8 +12,10 @@ public class Professor extends Usuario {
     }
 
     public List<Aluno> consultarAlunosMatriculados(Disciplina d) {
-        // TODO: retornar os alunos matriculados na disciplina informada
-        throw new UnsupportedOperationException("Nao implementado");
+        if (d == null || !disciplinas.contains(d)) {
+            return new ArrayList<>();
+        }
+        return d.listarAlunosMatriculados();
     }
 
     public List<Disciplina> getDisciplinas() {

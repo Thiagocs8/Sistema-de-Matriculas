@@ -1,7 +1,6 @@
 package br.pucminas.matriculas.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import br.pucminas.matriculas.model.enums.StatusPeriodo;
@@ -20,13 +19,15 @@ public class PeriodoMatricula {
     }
 
     public void encerrar() {
-        // TODO: implementar encerramento do periodo de matriculas
-        throw new UnsupportedOperationException("Nao implementado");
+        this.status = StatusPeriodo.ENCERRADO;
+        processarSituacaoDisciplinas();
     }
 
     public void processarSituacaoDisciplinas() {
-        // TODO: implementar processamento (ativar/cancelar) das disciplinas do periodo
-        throw new UnsupportedOperationException("Nao implementado");
+        matriculas.stream()
+                .map(Matricula::getDisciplina)
+                .distinct()
+                .forEach(Disciplina::verificarSituacaoFinal);
     }
 
     public Date getDataInicio() {

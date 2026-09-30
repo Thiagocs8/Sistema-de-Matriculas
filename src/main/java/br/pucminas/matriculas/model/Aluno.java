@@ -1,8 +1,10 @@
 package br.pucminas.matriculas.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import br.pucminas.matriculas.model.enums.StatusMatricula;
 import br.pucminas.matriculas.model.enums.TipoMatricula;
 
 public class Aluno extends Usuario {
@@ -16,18 +18,45 @@ public class Aluno extends Usuario {
     }
 
     public Matricula matricularEmDisciplina(Disciplina d, TipoMatricula tipo) {
-        // TODO: implementar matricula do aluno na disciplina, respeitando RN01
-        throw new UnsupportedOperationException("Nao implementado");
+        if (d == null || tipo == null) {
+            return null;
+        }
+
+        long obrigatoriasAtivas = matriculas.stream()
+                .filter(m -> m.getStatus() == StatusMatricula.ATIVA && m.getTipo() == TipoMatricula.OBRIGATORIA)
+                .count();
+
+        long optativasAtivas = matriculas.stream()
+                .filter(m -> m.getStatus() == StatusMatricula.ATIVA && m.getTipo() == TipoMatricula.OPTATIVA)
+                .count();
+
+        if (tipo == TipoMatricula.OBRIGATORIA && obrigatoriasAtivas >= 4) {
+            return null;
+        }
+
+        if (tipo == TipoMatricula.OPTATIVA && optativasAtivas >= 2) {
+            return null;
+        }
+
+        boolean sucesso = d.matricular(this);
+        if (!sucesso) {
+            return null;
+        }
+
+        Matricula novaMatricula = new Matricula(tipo, new Date(), this, d);
+        this.matriculas.add(novaMatricula);
+        return novaMatricula;
     }
 
     public void cancelarMatricula(Matricula m) {
-        // TODO: implementar cancelamento de matricula do aluno
-        throw new UnsupportedOperationException("Nao implementado");
+        if (m != null && matriculas.contains(m) && m.getStatus() == StatusMatricula.ATIVA) {
+            m.cancelar();
+            m.getDisciplina().cancelarMatricula(this);
+        }
     }
 
     public List<Matricula> consultarSituacao() {
-        // TODO: retornar as matriculas do aluno no semestre
-        throw new UnsupportedOperationException("Nao implementado");
+        return new ArrayList<>(this.matriculas);
     }
 
     public String getMatricula() {

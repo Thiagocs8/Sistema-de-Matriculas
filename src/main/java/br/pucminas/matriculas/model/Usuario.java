@@ -15,8 +15,10 @@ public abstract class Usuario {
     }
 
     public boolean autenticar(String senha) {
-        // TODO: implementar validacao de login
-        throw new UnsupportedOperationException("Nao implementado");
+        if (this.senha == null || senha == null) {
+            return false;
+        }
+        return this.senha.equals(senha);
     }
 
     public int getId() {

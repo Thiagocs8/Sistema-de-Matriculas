@@ -22,23 +22,53 @@ public class Disciplina {
     }
 
     public boolean matricular(Aluno a) {
-        // TODO: implementar matricula de aluno, respeitando capacidadeMaxima
-        throw new UnsupportedOperationException("Nao implementado");
+        if (a == null || status != StatusDisciplina.EM_ABERTO) {
+            return false;
+        }
+
+        long ativas = matriculas.stream().filter(Matricula::isAtiva).count();
+        if (ativas >= capacidadeMaxima) {
+            return false;
+        }
+
+        boolean jaMatriculado = matriculas.stream()
+                .anyMatch(m -> m.getAluno().equals(a) && m.isAtiva());
+        if (jaMatriculado) {
+            return false;
+        }
+
+        Matricula m = new Matricula(a, this);
+        return matriculas.add(m);
     }
 
     public void cancelarMatricula(Aluno a) {
-        // TODO: implementar cancelamento de matricula do aluno
-        throw new UnsupportedOperationException("Nao implementado");
+        if (a == null) return;
+        
+        for (Matricula m : matriculas) {
+            if (m.getAluno().equals(a) && m.isAtiva()) {
+                m.cancelar();
+                break;
+            }
+        }
     }
 
     public void verificarSituacaoFinal() {
-        // TODO: ativar ou cancelar a disciplina conforme minimoParaAtivar
-        throw new UnsupportedOperationException("Nao implementado");
+        long ativas = matriculas.stream().filter(Matricula::isAtiva).count();
+        if (ativas >= minimoParaAtivar) {
+            this.status = StatusDisciplina.ATIVA;
+        } else {
+            this.status = StatusDisciplina.CANCELADA;
+        }
     }
 
     public List<Aluno> listarAlunosMatriculados() {
-        // TODO: retornar lista de alunos com matricula ativa na disciplina
-        throw new UnsupportedOperationException("Nao implementado");
+        List<Aluno> alunos = new ArrayList<>();
+        for (Matricula m : matriculas) {
+            if (m.isAtiva()) {
+                alunos.add(m.getAluno());
+            }
+        }
+        return alunos;
     }
 
     public String getCodigo() {
@@ -62,7 +92,7 @@ public class Disciplina {
     }
 
     public void setCapacidadeMaxima(int capacidadeMaxima) {
-        this.capacidadeMaxima = capacidadeMaxima;
+        this.capacidadeMaxima = capacityMaxima;
     }
 
     public int getMinimoParaAtivar() {

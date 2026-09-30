@@ -15,8 +15,9 @@ public class Curso {
     }
 
     public void adicionarDisciplina(Disciplina d) {
-        // TODO: implementar adicao de disciplina ao curso
-        throw new UnsupportedOperationException("Nao implementado");
+        if (d != null && !disciplinas.contains(d)) {
+            disciplinas.add(d);
+        }
     }
 
     public String getNome() {
