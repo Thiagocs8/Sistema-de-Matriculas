@@ -18,6 +18,18 @@ public class Professor extends Usuario {
         return d.listarAlunosMatriculados();
     }
 
+    public void adicionarDisciplina(Disciplina d) {
+        if (d == null) {
+            return;
+        }
+        if (!disciplinas.contains(d)) {
+            disciplinas.add(d);
+        }
+        if (!d.getProfessores().contains(this)) {
+            d.getProfessores().add(this);
+        }
+    }
+
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }

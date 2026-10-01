@@ -9,6 +9,9 @@ import br.pucminas.matriculas.model.enums.TipoMatricula;
 
 public class Aluno extends Usuario {
 
+    public static final int MAX_OBRIGATORIAS = 4;
+    public static final int MAX_OPTATIVAS = 2;
+
     private String matricula;
     private List<Matricula> matriculas = new ArrayList<>();
 
@@ -30,11 +33,11 @@ public class Aluno extends Usuario {
                 .filter(m -> m.getStatus() == StatusMatricula.ATIVA && m.getTipo() == TipoMatricula.OPTATIVA)
                 .count();
 
-        if (tipo == TipoMatricula.OBRIGATORIA && obrigatoriasAtivas >= 4) {
+        if (tipo == TipoMatricula.OBRIGATORIA && obrigatoriasAtivas >= MAX_OBRIGATORIAS) {
             return null;
         }
 
-        if (tipo == TipoMatricula.OPTATIVA && optativasAtivas >= 2) {
+        if (tipo == TipoMatricula.OPTATIVA && optativasAtivas >= MAX_OPTATIVAS) {
             return null;
         }
 

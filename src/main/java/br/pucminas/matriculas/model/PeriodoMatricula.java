@@ -19,6 +19,13 @@ public class PeriodoMatricula {
         this.status = StatusPeriodo.ABERTO;
     }
 
+    public boolean estaAberto() {
+        Date agora = new Date();
+        return status == StatusPeriodo.ABERTO
+                && !agora.before(dataInicio)
+                && !agora.after(dataFim);
+    }
+
     public void encerrar() {
         this.status = StatusPeriodo.ENCERRADO;
         processarSituacaoDisciplinas();

@@ -45,7 +45,7 @@ public abstract class Usuario {
         this.login = login;
     }
 
-    protected String getSenha() {
+    public String getSenha() {
         return senha;
     }
 

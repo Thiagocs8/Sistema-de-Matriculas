@@ -1,6 +1,7 @@
 package br.pucminas.matriculas.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Secretaria extends Usuario {
@@ -27,6 +28,12 @@ public class Secretaria extends Usuario {
 
     public Curriculo gerarCurriculo(String semestre, Curso curso) {
         return new Curriculo(semestre, curso);
+    }
+
+    public PeriodoMatricula abrirPeriodoMatricula(Date inicio, Date fim) {
+        PeriodoMatricula p = new PeriodoMatricula(inicio, fim);
+        periodosAdministrados.add(p);
+        return p;
     }
 
     public void encerrarPeriodoMatricula(PeriodoMatricula p) {

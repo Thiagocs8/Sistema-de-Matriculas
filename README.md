@@ -9,9 +9,9 @@ Este repositório contém os artefatos de análise para a informatização do si
 
 ## Conteúdo
 
-- `diagrama_casos_uso.drawio` — Diagrama de Casos de Uso (UML), editável no [draw.io](https://app.diagrams.net/).
+- `docs/diagrama_casos_uso.drawio` — Diagrama de Casos de Uso (UML), editável no [draw.io](https://app.diagrams.net/).
 - `docs/diagrama_classes.drawio.pdf` — Diagrama de Classes (UML).
-- `src/main/java` — Projeto Java (Maven) com as classes, atributos e stub dos métodos modelados no diagrama de classes.
+- `src/main/java` — Projeto Java (Maven) com o protótipo do sistema: interface em linha de comando e persistência em arquivos.
 
 ## Projeto Estrutural (Diagrama de Classes)
 
@@ -19,15 +19,43 @@ O projeto Java (Maven, `pom.xml`) implementa a estrutura definida no diagrama de
 
 - `br.pucminas.matriculas.model` — `Usuario` (abstrata), `Aluno`, `Professor`, `Secretaria`, `Curso`, `Curriculo`, `Disciplina`, `PeriodoMatricula`, `Matricula`.
 - `br.pucminas.matriculas.model.enums` — `StatusDisciplina`, `TipoMatricula`, `StatusMatricula`, `StatusPeriodo`.
-- `br.pucminas.matriculas.external` — `SistemaCobranca` (interface para o sistema externo de cobrança).
+- `br.pucminas.matriculas.external` — `SistemaCobranca` (interface para o sistema externo de cobrança) e `SistemaCobrancaArquivo` (simulação que registra cada notificação em arquivo).
+- `br.pucminas.matriculas.service` — `SistemaMatriculas` (fachada: login, cadastros, período de matrículas, matrícula/cancelamento e notificação da cobrança) e `RegraNegocioException`.
+- `br.pucminas.matriculas.persistence` — `RepositorioArquivos` (grava e lê os dados em arquivos texto).
+- `br.pucminas.matriculas.ui` — `MenuConsole` (interface em linha de comando, com um menu para cada perfil).
 
-Nesta etapa (Lab01S02), as classes contêm os atributos e os stubs dos métodos modelados (lançando `UnsupportedOperationException` com `// TODO`), sem a lógica de negócio implementada. A implementação das funcionalidades será feita na etapa seguinte (Lab01S03).
+## Protótipo (Lab01S03)
 
-Para compilar o projeto com Maven:
+### Como executar
 
 ```bash
 mvn compile
+java -cp target/classes br.pucminas.matriculas.Main
 ```
+
+No primeiro acesso o sistema cria um usuário da secretaria com login `admin` e senha `admin`. A partir dele são cadastrados os cursos, disciplinas, professores e alunos.
+
+### Funcionalidades por perfil
+
+- **Secretaria** — cadastrar cursos, disciplinas, professores, alunos e outros usuários da secretaria; vincular disciplinas a cursos e professores a disciplinas; gerar o currículo do semestre; abrir e encerrar o período de matrículas.
+- **Aluno** — ver disciplinas e currículos; matricular-se em até 4 disciplinas obrigatórias e 2 optativas; cancelar matrículas; consultar a situação das matrículas. Matrícula e cancelamento só são aceitos com o período de matrículas aberto.
+- **Professor** — listar suas disciplinas e consultar os alunos matriculados em cada uma.
+
+Ao encerrar o período (manualmente pela secretaria ou automaticamente quando a data de fim passa), cada disciplina fica `ATIVA` se tiver pelo menos 3 inscritos ou `CANCELADA` caso contrário. Abrir um novo período inicia um novo semestre: as matrículas anteriores ficam guardadas no período encerrado e as disciplinas voltam a aceitar inscrições.
+
+### Persistência
+
+Os dados são gravados na pasta `dados/` (criada no diretório em que o programa é executado; outro caminho pode ser passado como argumento), em arquivos texto com campos separados por `;`:
+
+| Arquivo | Conteúdo |
+|---------|----------|
+| `usuarios.txt` | tipo; id; nome; login; senha; matrícula do aluno |
+| `disciplinas.txt` | código; nome; capacidade máxima; mínimo para ativar; status; logins dos professores |
+| `cursos.txt` | nome; créditos; códigos das disciplinas |
+| `curriculos.txt` | semestre; nome do curso |
+| `periodos.txt` | início; fim; status |
+| `matriculas.txt` | índice do período; login do aluno; código da disciplina; tipo; data; status |
+| `cobrancas.txt` | notificações enviadas ao sistema de cobrança (data; matrícula; aluno; código; disciplina) |
 
 ## Diagrama de Casos de Uso
 
@@ -53,7 +81,7 @@ E os seguintes **casos de uso** principais:
 - Encerrar Período de Matrículas
 - Processar Situação das Disciplinas — Ativar/Cancelar *(`<<extend>>` de "Encerrar Período de Matrículas")*
 
-> Abra o arquivo `diagrama_casos_uso.drawio` em [app.diagrams.net](https://app.diagrams.net/) (File → Open From → Device) para visualizar e editar o diagrama.
+> Abra o arquivo `docs/diagrama_casos_uso.drawio` em [app.diagrams.net](https://app.diagrams.net/) (File → Open From → Device) para visualizar e editar o diagrama.
 
 ---
 
